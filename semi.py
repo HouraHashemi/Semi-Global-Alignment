@@ -1,6 +1,7 @@
 import copy
 import numpy as np
 import time
+import pandas as pd
 
 class dynamic_semi_global_alignment():
 	
@@ -10,7 +11,7 @@ class dynamic_semi_global_alignment():
 	n, m, pairs = list(), list(), list()
 	paths = dict()
 	s0,s1 = str(), str()
-
+	score_matrix_dataframe = None
 	"""
 	PAM: Point Accepted Mutation
 	"""
@@ -80,8 +81,36 @@ class dynamic_semi_global_alignment():
 		max_coor_roots_col =[(coor, len(self.m)-1) for coor in np.array(np.where(last_col == self.score))[0]]
 		max_coor_roots = list(set(max_coor_roots_row + max_coor_roots_col))
 		
+		sm = self.score_matrix.astype(int)
+		self.score_matrix_dataframe = pd.DataFrame(sm)
+		self.score_matrix_dataframe.index = list(self.n)
+		self.score_matrix_dataframe.columns = list(self.m)
 		# Return list of start coordinates
+		
+		self.score_matrix = self.score_matrix.astype(int)
+		sm = self.score_matrix.astype(str)
+		self.score_matrix_dataframe = pd.DataFrame(sm)
+		self.score_matrix_dataframe.index = list(self.n)
+		self.score_matrix_dataframe.columns = list(self.m)
+
+		# print("-----------------------------")
+		# print(self.score_matrix_dataframe)
+		# print("-----------------------------")
+		# x = self.score_matrix_dataframe.reset_index(drop=True).style.applymap(self.lited_path)
+		# print(x)
+
 		return max_coor_roots
+
+	def lited_path(self,val):
+		all_lited_paths = list()
+		for p in self.paths:
+			all_lited_paths = list(set(all_lited_paths + p + self.paths[p]))
+
+		if val in all_lited_paths:
+			color = 'red'
+		else:
+			color = 'black'
+		return 'color: %s' % color
 
 
 	def trace_back(self, coordinates):
@@ -220,5 +249,4 @@ if __name__ == '__main__':
 	all_paths = dsga.generate_branch_of_paths(roots_coordinates)
 	dsga.generate_sequent(all_paths)
 	dsga.print_pairs()
-
 

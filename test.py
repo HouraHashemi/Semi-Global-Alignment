@@ -3,20 +3,24 @@ import time
 
 if __name__ == '__main__':
 
-	test_case = [(' AAAAA',' AA'),
-				 (' AAPAAAIAA',' AA'),
-	 			 (' WWWTGCA',' CCTGCA'),
-	 			 (' ACGTGGG',' ACGTCCC'),
-	 			 (' HEAGAWGHE',' PAWHEA'),
- 	 			 (' CACGGTCCGAA',' AACTTCGAA'),
-	 			 (' GTCCCCCCCCC',' GTCCCCCWWWWCCC'),
-	 			 (' ACTATATTATATATA',' ACTATATATATATA'),
-	 			 (' ACGTACGTACGTCCCCCCCCC',' ACTGACGTCCCCCWWWWCCC')
-	 			 ]
+	test_cases = {1: (' AAAAA',' AA'),
+				  2: (' WWWTGCA',' CCTGCA'),
+	 			  3: (' WWWTGCA',' CCTGCA'),
+	 			  4: (' ACGTGGG',' ACGTCCC'),
+	 			  5: (' HEAGAWGHE',' PAWHEA'),
+	 			  6: (' CGTCCGAAGTG',' GTCGAA'),
+ 	 			  7: (' CACGGTCCGAA',' AACTTCGAA'),
+	 			  8: (' GTCCCCCCCCC',' GTCCCCCWWWWCCC'),
+	 			  9: (' ACTATATTATATATA',' ACTATATATATATA'),
+	 			  10:(' ACGTACGTACGTCCCCCCCCC',' ACTGACGTCCCCCWWWWCCC')
+	 			  }
 
-		
-	s0 = test_case[0][0]
-	s1 = test_case[0][1]
+	
+	test = 9
+
+	print("=============================")
+	s0 = test_cases[test][0]
+	s1 = test_cases[test][1]
 
 	dsga = semi.dynamic_semi_global_alignment(s0, s1)
 	roots_coordinates = dsga.calculate_cells_of_score_matrix()
@@ -25,7 +29,6 @@ if __name__ == '__main__':
 	dsga.generate_sequent(all_paths)
 	dsga.print_pairs()
 	print("=============================")
-
 
 	# =============================
 	# AAAAA
@@ -84,6 +87,16 @@ if __name__ == '__main__':
 	# HEAGAWGHE-
 	# ---PAW-HEA
 	# =============================
+	
+	# CGTCCGAAGTG
+	# GTCGAA
+	# 20
+	# CGTCCGAAGTG
+	# -GT-CGAA---
+	# CGTCCGAAGTG
+	# -GTC-GAA---
+	# CGTCCGAAGTG  
+	# =============================
 
 	# CACGGTCCGAA
 	# AACTTCGAA
@@ -130,5 +143,4 @@ if __name__ == '__main__':
 	# ACGTACGTACGTCCCCCC---CCC
 	# ----ACTGACGTCCCCCWWWWCCC
 	# =============================
-
 
