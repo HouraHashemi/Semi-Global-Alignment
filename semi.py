@@ -117,7 +117,7 @@ class dynamic_semi_global_alignment():
 		for coor in coordinates:
 			coor_value = self.score_matrix[coor[0]][coor[1]]
 			# print(coor, coor_value)
-			if (coor_value <= 0):
+			if (coor_value == 0):
 				pass
 			else:
 				N, M = self.n[coor[0]], self.m[coor[1]]
